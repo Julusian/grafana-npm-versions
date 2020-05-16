@@ -2,10 +2,14 @@ import { createTerminus, HealthCheckError, TerminusOptions } from '@godaddy/term
 import { createServer } from 'http'
 import * as PouchDB from 'pouchdb'
 import * as express from 'express'
+// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+// @ts-ignore
 import * as reissue from 'reissue'
 import * as Prometheus from 'prom-client'
 import * as Metrics from './metrics'
 import * as PTimeout from 'p-timeout'
+// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+// @ts-ignore
 import * as PFinally from 'p-finally'
 
 let initialScrapingFinished = false
@@ -34,8 +38,15 @@ const terminusOptions: TerminusOptions = {
   logger: console.log,
 }
 
+const port = Number(process.env.PORT) || 9600
+const pollInterval = Number(process.env.POLL_INTERVAL) || 30000
+const packagesList = (process.env.PACKAGES || '').split(',').filter((n): boolean => !!n)
+
+if (packagesList.length === 0) {
+  throw new Error('Some packages must be specified')
+}
+
 const app = express()
-const port = 9600
 const server = createServer(app)
 
 createTerminus(server, terminusOptions)
@@ -53,13 +64,11 @@ interface PackageInfo {
 
 let currentData: PackageInfo[] = []
 
-const targetPackages = ['atem-connection', 'atem-state', 'timeline-state-resolver']
-
 async function doPoll(): Promise<void> {
   console.log('Starting poll')
 
   currentData = await Promise.all(
-    targetPackages.map((pkgName) => {
+    packagesList.map((pkgName) => {
       return PFinally(
         PTimeout<PackageInfo>(
           (async (): Promise<PackageInfo> => {
@@ -98,7 +107,7 @@ const poller = reissue.create({
     }
     return callback()
   },
-  interval: 30000,
+  interval: pollInterval,
 })
 
 poller.start()

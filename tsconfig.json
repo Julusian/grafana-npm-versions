@@ -16,6 +16,7 @@
     "pretty": true,
     "lib": ["es6"],
     "types": ["node", "jest"],
+    "skipLibCheck": true,
     "strict": true,
     "alwaysStrict": false,
     "strictPropertyInitialization": true,
