@@ -5,6 +5,8 @@
   "license": "MIT",
   "private": true,
   "scripts": {
+    "build": "del dist && yarn build:main",
+    "build:main": "tsc -p tsconfig.build.json",
     "lint": "eslint . --ext .ts --ignore-pattern dist",
     "dev": "yarn ts-node src/index.ts"
   },
@@ -15,6 +17,7 @@
     "@types/pouchdb": "^6.4.0",
     "@typescript-eslint/eslint-plugin": "^2.33.0",
     "@typescript-eslint/parser": "^2.33.0",
+    "del-cli": "^3.0.1",
     "eslint": "^7.0.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-node": "^11.1.0",
