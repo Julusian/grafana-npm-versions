@@ -13,7 +13,8 @@
   "dependencies": {
     "@godaddy/terminus": "^4.4.1",
     "express": "^4.17.1",
-    "p-all": "^3.0.0",
+    "p-finally": "^2.0.1",
+    "p-timeout": "^3.2.0",
     "pouchdb": "^7.2.1",
     "prom-client": "^12.0.0",
     "reissue": "^3.0.0"

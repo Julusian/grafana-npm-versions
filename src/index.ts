@@ -4,8 +4,10 @@ import * as PouchDB from 'pouchdb'
 // import PAll from 'p-all'
 import * as express from 'express'
 import * as reissue from 'reissue'
-import * as Prometheus from 'prom-client';
-import * as Metrics from './metrics';
+import * as Prometheus from 'prom-client'
+import * as Metrics from './metrics'
+import * as PTimeout from 'p-timeout'
+import * as PFinally from 'p-finally'
 
 let initialScrapingFinished = false
 async function healthCheck(): Promise<any> {
@@ -52,30 +54,34 @@ interface PackageInfo {
 
 let currentData: PackageInfo[] = []
 
+const targetPackages = [
+    'atem-connection',
+    'atem-state',
+    'timeline-state-resolver'
+]
+
 async function doPoll() {
     console.log('Starting poll')
-    // TODO - handle failure of a single package
-    const packages = await Promise.all([
-        registry.get<any>('atem-connection'),
-        registry.get<any>('atem-state'),
-        registry.get<any>('timeline-state-resolver'),
-    ])
+    
+    currentData = await Promise.all(targetPackages.map((pkgName) => {
+        return PFinally(PTimeout<PackageInfo>((async () => {
+            const res: any = await registry.get<any>(pkgName)
 
-    currentData = packages.map((res) => {
-        const distTags = res['dist-tags']
-        return {
-            id: res._id,
-            versions: Object.keys(res.time).map(v => {
-                const tag = Object.keys(distTags).find(t => distTags[t] === v)
-                
-                return {
-                    name: v,
-                    date: res.time[v],
-                    tag: tag
-                }
-            })
-        }
-    })
+            const distTags = res['dist-tags']
+            return {
+                id: res._id,
+                versions: Object.keys(res.time).map(v => {
+                    const tag = Object.keys(distTags).find(t => distTags[t] === v)
+                    
+                    return {
+                        name: v,
+                        date: res.time[v],
+                        tag: tag
+                    }
+                })
+            }
+        })(), 5000)) as Promise<PackageInfo>
+    }))
 
     initialScrapingFinished = true
     console.log('Completed poll')
