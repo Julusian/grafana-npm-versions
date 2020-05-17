@@ -1,6 +1,5 @@
 import { createTerminus, HealthCheckError, TerminusOptions } from '@godaddy/terminus'
 import { createServer } from 'http'
-import * as PouchDB from 'pouchdb'
 import * as express from 'express'
 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
 // @ts-ignore
@@ -8,9 +7,7 @@ import * as reissue from 'reissue'
 import * as Prometheus from 'prom-client'
 import * as Metrics from './metrics'
 import * as PTimeout from 'p-timeout'
-// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-// @ts-ignore
-import * as PFinally from 'p-finally'
+import * as axios from 'axios'
 
 let initialScrapingFinished = false
 async function healthCheck(): Promise<any> {
@@ -51,13 +48,11 @@ const server = createServer(app)
 
 createTerminus(server, terminusOptions)
 
-const registry = new PouchDB('http://registry.npmjs.com')
-
 interface PackageInfo {
   id: string
   versions: Array<{
     name: string
-    date: string
+    // date: string
     tag?: string
   }>
 }
@@ -71,17 +66,22 @@ async function doPoll(): Promise<void> {
     packagesList.map((pkgName) => {
       return PTimeout<PackageInfo>(
         (async (): Promise<PackageInfo> => {
-          const res: any = await registry.get<any>(pkgName)
+          const rawRes = await axios.default.get(`https://registry.npmjs.org/${pkgName}`, {
+            headers: {
+              Accept: 'application/vnd.npm.install-v1+json',
+            },
+          })
+          const res = rawRes.data
 
           const distTags = res['dist-tags']
           return {
             id: res._id,
-            versions: Object.keys(res.time).map((v) => {
+            versions: Object.keys(res.versions).map((v) => {
               const tag = Object.keys(distTags).find((t) => distTags[t] === v)
 
               return {
                 name: v,
-                date: res.time[v],
+                // date: res.time[v],
                 tag: tag,
               }
             }),
@@ -122,7 +122,7 @@ app.get('/metrics', (_req, res) => {
   currentData.forEach((pkg) => {
     pkg.versions.forEach((ver) => {
       if (ver.name === 'created' || ver.name === 'modified') return
-      Metrics.packageVersions.set({ package: pkg.id, version: ver.name, release: ver.date }, 1)
+      Metrics.packageVersions.set({ package: pkg.id, version: ver.name, release: '' /*ver.date*/ }, 1)
     })
   })
 
