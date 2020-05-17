@@ -1,5 +1,5 @@
 {
-  "name": "prometheus-exporter-npm",
+  "name": "grafana-npm",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
