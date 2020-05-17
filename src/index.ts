@@ -67,32 +67,34 @@ let currentData: PackageInfo[] = []
 async function doPoll(): Promise<void> {
   console.log('Starting poll')
 
-  currentData = await Promise.all(
+  const newData = await Promise.all(
     packagesList.map((pkgName) => {
-      return PFinally(
-        PTimeout<PackageInfo>(
-          (async (): Promise<PackageInfo> => {
-            const res: any = await registry.get<any>(pkgName)
+      return PTimeout<PackageInfo>(
+        (async (): Promise<PackageInfo> => {
+          const res: any = await registry.get<any>(pkgName)
 
-            const distTags = res['dist-tags']
-            return {
-              id: res._id,
-              versions: Object.keys(res.time).map((v) => {
-                const tag = Object.keys(distTags).find((t) => distTags[t] === v)
+          const distTags = res['dist-tags']
+          return {
+            id: res._id,
+            versions: Object.keys(res.time).map((v) => {
+              const tag = Object.keys(distTags).find((t) => distTags[t] === v)
 
-                return {
-                  name: v,
-                  date: res.time[v],
-                  tag: tag,
-                }
-              }),
-            }
-          })(),
-          5000
-        )
-      ) as Promise<PackageInfo>
+              return {
+                name: v,
+                date: res.time[v],
+                tag: tag,
+              }
+            }),
+          }
+        })(),
+        5000
+      ).catch((e) => {
+        console.error(`Failed to scrape: "${pkgName}": ${JSON.stringify(e)}`)
+        return undefined
+      })
     })
   )
+  currentData = newData.filter((v): boolean => !!v) as PackageInfo[]
 
   initialScrapingFinished = true
   console.log('Completed poll')
@@ -103,7 +105,7 @@ const poller = reissue.create({
     try {
       await doPoll()
     } catch (e) {
-      console.error(`Poll threw error: ${e}`)
+      console.error(`Poll threw error: ${JSON.stringify(e)}`)
     }
     return callback()
   },
