@@ -1,6 +1,6 @@
 import { Sequelize } from 'sequelize'
 import PQueue from 'p-queue'
-import { NpmVersion, NpmTag } from './models'
+import { NpmVersion, NpmTag, INpmTag, literal, INpmVersion } from './models'
 import * as PouchDB from 'pouchdb'
 
 const db = new PouchDB('https://replicate.npmjs.com/')
@@ -31,11 +31,13 @@ async function pollPackage(_workQueue: PQueue, pkgName: string): Promise<void> {
 				if (versionStr === 'created' || versionStr === 'modified') return
 				const timeStr = res.time[versionStr]
 
-				await NpmVersion.create({
-					package: pkgName,
-					version: versionStr,
-					published: new Date(timeStr),
-				})
+				await NpmVersion.create(
+					literal<INpmVersion>({
+						package: pkgName,
+						version: versionStr,
+						published: new Date(timeStr),
+					})
+				)
 			}
 		})
 	)
@@ -60,11 +62,13 @@ async function pollPackage(_workQueue: PQueue, pkgName: string): Promise<void> {
 					}
 				)
 			} else if (!exists) {
-				await NpmTag.create({
-					package: pkgName,
-					version: tagVersion,
-					tag: tag,
-				})
+				await NpmTag.create(
+					literal<INpmTag>({
+						package: pkgName,
+						version: tagVersion,
+						tag: tag,
+					})
+				)
 			}
 		})
 	)
