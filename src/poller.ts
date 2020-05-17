@@ -92,6 +92,6 @@ export async function doPoll(_sequelize: Sequelize, packagesList: string[]): Pro
 		)
 	)
 
-	await workQueue.onEmpty()
+	await workQueue.onIdle()
 	console.log('Completed poll')
 }
