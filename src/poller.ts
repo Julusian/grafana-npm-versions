@@ -1,18 +1,11 @@
 import { Sequelize } from 'sequelize'
-import * as axios from 'axios'
 import PQueue from 'p-queue'
 import { NpmVersion, NpmTag } from './models'
+import * as PouchDB from 'pouchdb'
 
-async function pollPackageVersion(pkgName: string, version: string): Promise<void> {
-	// TODO - load and save the more fields
+const db = new PouchDB('https://replicate.npmjs.com/')
 
-	await NpmVersion.create({
-		package: pkgName,
-		version: version,
-	})
-}
-
-async function pollPackage(workQueue: PQueue, pkgName: string): Promise<void> {
+async function pollPackage(_workQueue: PQueue, pkgName: string): Promise<void> {
 	const pExistingDocs: Promise<NpmVersion[]> = NpmVersion.findAll({
 		where: {
 			package: pkgName,
@@ -24,26 +17,28 @@ async function pollPackage(workQueue: PQueue, pkgName: string): Promise<void> {
 		},
 	})
 
-	const rawRes = await axios.default.get(`https://registry.npmjs.org/${pkgName}`, {
-		headers: {
-			Accept: 'application/vnd.npm.install-v1+json',
-		},
-	})
-	const res = rawRes.data
+	const res: any = await db.get(pkgName)
 
 	const existingDocs = await pExistingDocs
 	// Note: this assumes a version will never change (which is valid), or be removed (as it is unlikely, but possible)
 
-	Object.keys(res.versions).forEach((versionStr: string) => {
-		const exists = existingDocs.find((doc): boolean => doc.version === versionStr)
-		if (!exists) {
-			workQueue.add(() =>
-				pollPackageVersion(pkgName, versionStr).catch((e) => {
-					console.error(`Failed to scrape package version: "${pkgName}#${versionStr}" ${JSON.stringify(e)}`)
+	// TODO - handle queries failing
+
+	await Promise.all(
+		Object.keys(res.time).map(async (versionStr: string) => {
+			const exists = existingDocs.find((doc): boolean => doc.version === versionStr)
+			if (!exists) {
+				if (versionStr === 'created' || versionStr === 'modified') return
+				const timeStr = res.time[versionStr]
+
+				await NpmVersion.create({
+					package: pkgName,
+					version: versionStr,
+					published: new Date(timeStr),
 				})
-			)
-		}
-	})
+			}
+		})
+	)
 
 	// update dist-tage
 	const existingTags = await pExistingTags
@@ -87,7 +82,8 @@ export async function doPoll(_sequelize: Sequelize, packagesList: string[]): Pro
 	workQueue.addAll(
 		packagesList.map((pkgName): (() => Promise<void>) => (): Promise<void> =>
 			pollPackage(workQueue, pkgName).catch((e) => {
-				console.error(`Failed to scrape package: "${pkgName}" ${JSON.stringify(e)}`)
+				console.error(`Failed to scrape package: "${pkgName}"`)
+				console.error(e)
 			})
 		)
 	)

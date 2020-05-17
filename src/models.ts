@@ -11,6 +11,7 @@ const sequelize = new Sequelize(mysqlUrl)
 export class NpmVersion extends Model {
 	public package!: string
 	public version!: string
+	public published!: Date
 }
 export class NpmTag extends Model {
 	public package!: string
@@ -22,6 +23,7 @@ NpmVersion.init(
 	{
 		package: DataTypes.STRING,
 		version: DataTypes.STRING,
+		published: DataTypes.DATE,
 	},
 	{
 		sequelize,
