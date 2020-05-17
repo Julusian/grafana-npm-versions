@@ -75,7 +75,7 @@ async function doPoll(): Promise<void> {
 
           const distTags = res['dist-tags']
           return {
-            id: res._id,
+            id: pkgName,
             versions: Object.keys(res.versions).map((v) => {
               const tag = Object.keys(distTags).find((t) => distTags[t] === v)
 
