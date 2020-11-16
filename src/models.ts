@@ -79,6 +79,9 @@ NpmTag.init(
 	}
 )
 
-export function initDb(): Promise<Sequelize> {
-	return sequelize.sync().then(() => sequelize)
+export async function initDb(): Promise<Sequelize> {
+	await sequelize.authenticate()
+	await sequelize.sync()
+
+	return sequelize
 }
