@@ -2,6 +2,23 @@
 
 This projects monitors npm packages for new versions, storing into a mysql database for consumption in grafana.
 
+## Example query
+
+```sql
+SELECT
+  npm_versions.package as Package,
+  npm_versions.version as Version,
+  npm_tags.tag as Tag,
+  npm_versions.published as Published
+FROM npm_versions
+LEFT JOIN npm_tags ON npm_tags.package = npm_versions.package AND npm_tags.version = npm_versions.version
+WHERE (published >= $__timeFrom() AND published <= $__timeTo())
+  OR npm_tags.tag IN ('latest', 'nightly') -- , 'experimental')
+
+ORDER BY npm_versions.published DESC
+LIMIT 50
+```
+
 ## Installation
 
 Ensure you have a running mysql server
