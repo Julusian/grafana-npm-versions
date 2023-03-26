@@ -1,15 +1,15 @@
 {
 	"compilerOptions": {
-		"module": "commonjs",
-		"target": "es2018",
+		"module": "es2022",
+		"target": "es2022",
 		"moduleResolution": "node",
-		"sourceMap": true,
+		"sourceMap": false,
 		"outDir": "dist",
 		"baseUrl": "./",
 		"paths": {
 			"*": ["node_modules/*"]
 		},
-		"declaration": true,
+		"declaration": false,
 		"importHelpers": true,
 		"listFiles": false,
 		"traceResolution": false,

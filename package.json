@@ -4,6 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "private": true,
+  "type": "module",
   "scripts": {
     "prepare": "husky install",
     "build": "rimraf dist && yarn build:main",
@@ -39,7 +40,7 @@
     "@godaddy/terminus": "^4.11.2",
     "express": "^4.18.2",
     "mysql2": "^3.2.0",
-    "p-queue": "^6.6.2",
+    "p-queue": "^7.3.4",
     "pouchdb": "^7.2.2",
     "reissue": "^3.1.0",
     "sequelize": "^6.30.0",

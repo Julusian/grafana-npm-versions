@@ -4,8 +4,8 @@
 	"rules": {
 		"prettier/prettier": "error"
 	},
-	"env": { "es2017": true },
-	"parserOptions": { "sourceType": "module", "ecmaVersion": 2018 },
+	"env": { "es2022": true },
+	"parserOptions": { "sourceType": "module", "ecmaVersion": 2022 },
 	"overrides": [
 		{
 			"files": ["*.ts"],
