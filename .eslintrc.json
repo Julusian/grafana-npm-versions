@@ -4,5 +4,13 @@
 		"jest": {
 			"version": "latest"
 		}
-	}
+	},
+	"overrides": [
+		{
+			"files": ["*"],
+			"rules": {
+				"node/no-missing-import": 0
+			}
+		}
+	]
 }

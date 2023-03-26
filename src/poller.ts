@@ -83,9 +83,9 @@ export async function doPoll(_sequelize: Sequelize, packagesList: string[]): Pro
 		timeout: 4000,
 	})
 
-	workQueue.addAll(
+	await workQueue.addAll(
 		packagesList.map(
-			(pkgName) => (): Promise<void> =>
+			(pkgName) => async (): Promise<void> =>
 				pollPackage(workQueue, pkgName).catch((e) => {
 					console.error(`Failed to scrape package: "${pkgName}"`)
 					console.error(e)
