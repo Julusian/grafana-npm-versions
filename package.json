@@ -3,6 +3,14 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "homepage": "https://github.com/julusian/grafana-npm-versions#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/julusian/grafana-npm-versions.git"
+  },
+  "bugs": {
+    "url": "https://github.com/julusian/grafana-npm-versions/issues"
+  },
   "private": true,
   "type": "module",
   "scripts": {

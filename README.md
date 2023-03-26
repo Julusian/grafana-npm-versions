@@ -34,7 +34,7 @@ It can be run in docker like:
 docker run --restart=always \
   -e MYSQL_URL="mysql://USERNAME:PASSWORD@HOST/DATABASE" \
   -e PACKAGES=atem-connection,@julusian/jpeg-turbo \
-   julusian/grafana-npm
+   ghcr.io/julusian/grafana-npm-versions
 
 ```
 
