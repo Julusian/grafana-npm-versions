@@ -9,28 +9,25 @@
     "prepare": "husky install",
     "build": "rimraf dist && yarn build:main",
     "build:main": "tsc -p tsconfig.build.json",
-    "lint:raw": "eslint --ext .ts --ext .js --ignore-pattern dist",
+    "lint:raw": "yarn eslint --ext .ts --ext .js --ignore-pattern dist",
     "lint": "yarn lint:raw .",
     "lint-fix": "yarn lint --fix",
-    "dev": "yarn ts-node src/index.ts"
+    "dev": "yarn ts-node src/index.ts",
+    "eslint": "./node_modules/.bin/eslint",
+    "prettier": "./node_modules/.bin/prettier",
+    "lint-staged": "./node_modules/.bin/lint-staged"
   },
   "devDependencies": {
+    "@sofie-automation/code-standard-preset": "^2.4.0",
     "@types/express": "^4.17.17",
     "@types/node": "^18.15.10",
     "@types/pouchdb": "^6.4.0",
     "@types/underscore": "^1.11.4",
-    "@typescript-eslint/eslint-plugin": "^5.56.0",
-    "@typescript-eslint/parser": "^5.56.0",
-    "eslint": "^8.36.0",
-    "eslint-config-prettier": "^8.8.0",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-prettier": "^4.2.1",
     "husky": "^8.0.3",
-    "lint-staged": "^13.2.0",
     "prettier": "^2.8.7",
     "rimraf": "^4.4.1",
     "ts-node": "^10.9.1",
-    "typescript": "^5.0.2"
+    "typescript": "~4.9"
   },
   "engines": {
     "node": "^18.15"
@@ -48,7 +45,7 @@
   },
   "lint-staged": {
     "*.{json,md}": [
-      "prettier --write"
+      "yarn prettier --write"
     ],
     "*.{ts,js}": [
       "yarn lint:raw --fix"
