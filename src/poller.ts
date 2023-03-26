@@ -1,7 +1,7 @@
 import { Sequelize } from 'sequelize'
 import PQueue from 'p-queue'
-import { NpmVersion, NpmTag, INpmTag, literal, INpmVersion } from './models'
-import * as PouchDB from 'pouchdb'
+import PouchDB from 'pouchdb'
+import { NpmVersion, NpmTag, INpmTag, literal, INpmVersion } from './models.js'
 
 const db = new PouchDB('https://replicate.npmjs.com/')
 

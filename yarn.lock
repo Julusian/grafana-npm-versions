@@ -908,13 +908,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"argsarray@npm:0.0.1":
-  version: 0.0.1
-  resolution: "argsarray@npm:0.0.1"
-  checksum: 0042accbc0a2d855ad5af56df49291e0e4cae7456f42d486f4cb05518c8e1939bf8aca7dece89d846349d615793fae2cea8ebb20a8207c0f22dafb88b1536819
-  languageName: node
-  linkType: hard
-
 "array-find-index@npm:^1.0.2":
   version: 1.0.2
   resolution: "array-find-index@npm:1.0.2"
@@ -2197,7 +2190,7 @@ __metadata:
     husky: ^8.0.3
     mysql2: ^3.2.0
     p-queue: ^7.3.4
-    pouchdb: ^7.2.2
+    pouchdb: ^8.0.1
     prettier: ^2.8.7
     reissue: ^3.1.0
     rimraf: ^4.4.1
@@ -3688,18 +3681,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"pouchdb@npm:^7.2.2":
-  version: 7.3.1
-  resolution: "pouchdb@npm:7.3.1"
+"pouchdb@npm:^8.0.1":
+  version: 8.0.1
+  resolution: "pouchdb@npm:8.0.1"
   dependencies:
     abort-controller: 3.0.0
-    argsarray: 0.0.1
     buffer-from: 1.1.2
     clone-buffer: 1.0.0
     double-ended-queue: 2.1.0-0
     fetch-cookie: 0.11.0
     immediate: 3.3.0
-    inherits: 2.0.4
     level: 6.0.1
     level-codec: 9.0.2
     level-write-stream: 1.0.0
@@ -3712,7 +3703,7 @@ __metadata:
     through2: 3.0.2
     uuid: 8.3.2
     vuvuzela: 1.0.3
-  checksum: a64326fd85f352a1b12f187b38cb30f496b02947f38a62d981fbd77d9a8ec75b158f9bec75072a72a8e1f26fa835334d777b887d8246de8096213ce962479bb7
+  checksum: 99721b4d44acb0a9a862fc42d36517d4c89c236ff45777cdfc55c2f313870bd03784f0621afc23095ca1c4cc26e79f6e599edbef4176e2de11cc479db36cd219
   languageName: node
   linkType: hard
 

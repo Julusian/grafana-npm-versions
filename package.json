@@ -12,7 +12,7 @@
     "lint:raw": "yarn eslint --ext .ts --ext .js --ignore-pattern dist",
     "lint": "yarn lint:raw .",
     "lint-fix": "yarn lint --fix",
-    "dev": "yarn ts-node src/index.ts",
+    "dev": "yarn node --loader ts-node/esm src/index.ts",
     "eslint": "./node_modules/.bin/eslint",
     "prettier": "./node_modules/.bin/prettier",
     "lint-staged": "./node_modules/.bin/lint-staged"
@@ -38,7 +38,7 @@
     "express": "^4.18.2",
     "mysql2": "^3.2.0",
     "p-queue": "^7.3.4",
-    "pouchdb": "^7.2.2",
+    "pouchdb": "^8.0.1",
     "reissue": "^3.1.0",
     "sequelize": "^6.30.0",
     "underscore": "^1.13.6"
