@@ -5,54 +5,52 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "build": "del dist && yarn build:main",
+    "prepare": "husky install",
+    "build": "rimraf dist && yarn build:main",
     "build:main": "tsc -p tsconfig.build.json",
-    "lint": "eslint . --ext .ts --ignore-pattern dist",
+    "lint:raw": "eslint --ext .ts --ext .js --ignore-pattern dist",
+    "lint": "yarn lint:raw .",
+    "lint-fix": "yarn lint --fix",
     "dev": "yarn ts-node src/index.ts"
   },
   "devDependencies": {
-    "@types/express": "^4.17.9",
-    "@types/node": "^14.14.7",
+    "@types/express": "^4.17.17",
+    "@types/node": "^18.15.10",
     "@types/pouchdb": "^6.4.0",
-    "@types/underscore": "^1.10.24",
-    "@typescript-eslint/eslint-plugin": "^4.7.0",
-    "@typescript-eslint/parser": "^4.7.0",
-    "del-cli": "^3.0.1",
-    "eslint": "^7.13.0",
-    "eslint-config-prettier": "^6.15.0",
+    "@types/underscore": "^1.11.4",
+    "@typescript-eslint/eslint-plugin": "^5.56.0",
+    "@typescript-eslint/parser": "^5.56.0",
+    "eslint": "^8.36.0",
+    "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-prettier": "^3.1.4",
-    "husky": "^4.3.0",
-    "lint-staged": "^10.5.1",
-    "prettier": "^2.1.2",
-    "ts-node": "^9.0.0",
-    "typescript": "^4.0.5"
+    "eslint-plugin-prettier": "^4.2.1",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.2.0",
+    "prettier": "^2.8.7",
+    "rimraf": "^4.4.1",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.0.2"
   },
   "engines": {
-    "node": "^12.16",
+    "node": "^18.15",
     "yarn": "^1.22"
   },
   "dependencies": {
-    "@godaddy/terminus": "^4.4.1",
-    "express": "^4.17.1",
-    "mysql2": "^2.2.5",
+    "@godaddy/terminus": "^4.11.2",
+    "express": "^4.18.2",
+    "mysql2": "^3.2.0",
     "p-queue": "^6.6.2",
     "pouchdb": "^7.2.2",
-    "reissue": "^3.0.0",
-    "sequelize": "^6.3.5",
-    "underscore": "^1.11.0"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
+    "reissue": "^3.1.0",
+    "sequelize": "^6.30.0",
+    "underscore": "^1.13.6"
   },
   "lint-staged": {
-    "*.{js,json,md}": [
+    "*.{json,md}": [
       "prettier --write"
     ],
-    "*.{ts}": [
-      "yarn lint:fix --"
+    "*.{ts,js}": [
+      "yarn lint:raw --fix"
     ]
   }
 }

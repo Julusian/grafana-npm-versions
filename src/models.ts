@@ -23,12 +23,12 @@ export interface INpmTag {
 	tag: string
 }
 
-export class NpmVersion extends Model implements INpmVersion {
+export class NpmVersion extends Model<INpmVersion> implements INpmVersion {
 	public package!: string
 	public version!: string
 	public published!: Date
 }
-export class NpmTag extends Model implements INpmTag {
+export class NpmTag extends Model<INpmTag> implements INpmTag {
 	public package!: string
 	public version!: string
 	public tag!: string

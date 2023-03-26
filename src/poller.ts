@@ -84,11 +84,12 @@ export async function doPoll(_sequelize: Sequelize, packagesList: string[]): Pro
 	})
 
 	workQueue.addAll(
-		packagesList.map((pkgName): (() => Promise<void>) => (): Promise<void> =>
-			pollPackage(workQueue, pkgName).catch((e) => {
-				console.error(`Failed to scrape package: "${pkgName}"`)
-				console.error(e)
-			})
+		packagesList.map(
+			(pkgName) => (): Promise<void> =>
+				pollPackage(workQueue, pkgName).catch((e) => {
+					console.error(`Failed to scrape package: "${pkgName}"`)
+					console.error(e)
+				})
 		)
 	)
 
