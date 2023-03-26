@@ -575,13 +575,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/underscore@npm:^1.11.4":
-  version: 1.11.4
-  resolution: "@types/underscore@npm:1.11.4"
-  checksum: db9f8486bc851b732259e51f42d62aad1ae2158be5724612dc125ece5f5d61c51447f9dea28284c2a0f79cb95e788d01cb5ce97709880019213e69fab0dd1696
-  languageName: node
-  linkType: hard
-
 "@types/validator@npm:^13.7.1":
   version: 13.7.14
   resolution: "@types/validator@npm:13.7.14"
@@ -2185,7 +2178,6 @@ __metadata:
     "@types/express": ^4.17.17
     "@types/node": ^18.15.10
     "@types/pouchdb": ^6.4.0
-    "@types/underscore": ^1.11.4
     express: ^4.18.2
     husky: ^8.0.3
     mysql2: ^3.2.0
@@ -2197,7 +2189,6 @@ __metadata:
     sequelize: ^6.30.0
     ts-node: ^10.9.1
     typescript: ~4.9
-    underscore: ^1.13.6
   languageName: unknown
   linkType: soft
 
@@ -4777,13 +4768,6 @@ __metadata:
     tsc: bin/tsc
     tsserver: bin/tsserver
   checksum: ab417a2f398380c90a6cf5a5f74badd17866adf57f1165617d6a551f059c3ba0a3e4da0d147b3ac5681db9ac76a303c5876394b13b3de75fdd5b1eaa06181c9d
-  languageName: node
-  linkType: hard
-
-"underscore@npm:^1.13.6":
-  version: 1.13.6
-  resolution: "underscore@npm:1.13.6"
-  checksum: d5cedd14a9d0d91dd38c1ce6169e4455bb931f0aaf354108e47bd46d3f2da7464d49b2171a5cf786d61963204a42d01ea1332a903b7342ad428deaafaf70ec36
   languageName: node
   linkType: hard
 

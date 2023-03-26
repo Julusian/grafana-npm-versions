@@ -22,7 +22,6 @@
     "@types/express": "^4.17.17",
     "@types/node": "^18.15.10",
     "@types/pouchdb": "^6.4.0",
-    "@types/underscore": "^1.11.4",
     "husky": "^8.0.3",
     "prettier": "^2.8.7",
     "rimraf": "^4.4.1",
@@ -40,8 +39,7 @@
     "p-queue": "^7.3.4",
     "pouchdb": "^8.0.1",
     "reissue": "^3.1.0",
-    "sequelize": "^6.30.0",
-    "underscore": "^1.13.6"
+    "sequelize": "^6.30.0"
   },
   "lint-staged": {
     "*.{json,md}": [
