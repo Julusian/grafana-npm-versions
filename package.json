@@ -14,7 +14,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "prepare": "husky install",
+    "postinstall": "husky install",
+    "postinstall:disable": "pinst --disable",
     "build": "rimraf dist && yarn build:main",
     "build:main": "tsc -p tsconfig.build.json",
     "lint:raw": "yarn eslint --ext .ts --ext .js --ignore-pattern dist",
@@ -31,6 +32,7 @@
     "@types/node": "^18.15.10",
     "@types/pouchdb": "^6.4.0",
     "husky": "^8.0.3",
+    "pinst": "^3.0.0",
     "prettier": "^2.8.7",
     "rimraf": "^4.4.1",
     "ts-node": "^10.9.1",
@@ -49,6 +51,7 @@
     "reissue": "^3.1.0",
     "sequelize": "^6.30.0"
   },
+  "prettier": "@sofie-automation/code-standard-preset/.prettierrc.json",
   "lint-staged": {
     "*.{json,md}": [
       "yarn prettier --write"
