@@ -1,6 +1,7 @@
 FROM node:20
 COPY . /build
 WORKDIR /build
+RUN corepack enable
 RUN yarn install
 RUN yarn build
 RUN yarn postinstall:disable
