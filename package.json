@@ -39,9 +39,9 @@
     "typescript": "~4.9.5"
   },
   "engines": {
-    "node": "^18.15"
+    "node": "^20.11"
   },
-  "packageManager": "yarn@3.5.0",
+  "packageManager": "yarn@4.1.0",
   "dependencies": {
     "@godaddy/terminus": "^4.12.1",
     "express": "^4.18.3",
