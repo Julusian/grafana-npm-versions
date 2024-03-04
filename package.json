@@ -1,6 +1,6 @@
 {
   "name": "grafana-npm",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "main": "index.js",
   "license": "MIT",
   "homepage": "https://github.com/julusian/grafana-npm-versions#readme",
