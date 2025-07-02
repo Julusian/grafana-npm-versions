@@ -1,6 +1,5 @@
 import { createTerminus, HealthCheckError, TerminusOptions } from '@godaddy/terminus'
 import { createServer } from 'http'
-import express from 'express'
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import * as reissue from 'reissue'
@@ -44,8 +43,9 @@ if (packagesList.length === 0) {
 	throw new Error('Some packages must be specified')
 }
 
-const app = express()
-const server = createServer(app)
+const server = createServer((_request, response) => {
+	response.end(`Not found`)
+})
 
 let poller: any
 
@@ -71,7 +71,7 @@ initDb()
 	})
 	.catch((e) => {
 		console.error(`Failed to connect to the db: ${e}`)
-		// eslint-disable-next-line no-process-exit
+		// eslint-disable-next-line n/no-process-exit
 		process.exit(1)
 	})
 
